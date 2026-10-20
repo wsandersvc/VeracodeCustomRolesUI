@@ -64,7 +64,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.release_tag }}
-          files: release-artifacts/**/*.jar
+          files: release-artifacts/**/VeracodeCustomRolesUI-{arm64,x64}.jar
           draft: false
           prerelease: false
         env:
