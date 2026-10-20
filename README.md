@@ -2,8 +2,8 @@
 
 ## Requirements:
 
-- Java 8
-- Veracode API ID and Key for a User account with permission to create/edit/update Custom Roles
+- Java 17
+- Veracode API ID and Key for a User account with permission to create/edit/update Custom Roles (located in ~/.veracode/credentials)
 
 ## Usage:
 
