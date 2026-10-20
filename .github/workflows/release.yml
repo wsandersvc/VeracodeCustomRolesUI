@@ -15,9 +15,14 @@ jobs:
       matrix:
         include:
           - runner: ubuntu-latest
+            os: linux
             arch: x64
-          - runner: ubuntu-latest
+          - runner: macos-latest
+            os: mac
             arch: arm64
+          - runner: windows-latest
+            os: win
+            arch: x64
 
     steps:
       - uses: actions/checkout@v4
@@ -31,18 +36,18 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
-      - name: Rename JAR with architecture
+      - name: Rename JAR with OS and architecture
         run: |
           cd target
           if [ -f VeracodeCustomRolesUI.jar ]; then
-            mv VeracodeCustomRolesUI.jar VeracodeCustomRolesUI-${{ matrix.arch }}.jar
+            mv VeracodeCustomRolesUI.jar VeracodeCustomRolesUI-${{ matrix.os }}-${{ matrix.arch }}.jar
           fi
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-ubuntu-${{ matrix.arch }}
-          path: target/VeracodeCustomRolesUI-${{ matrix.arch }}.jar
+          name: build-${{ matrix.os }}-${{ matrix.arch }}
+          path: target/VeracodeCustomRolesUI-${{ matrix.os }}-${{ matrix.arch }}.jar
 
   create-release:
     needs: build
