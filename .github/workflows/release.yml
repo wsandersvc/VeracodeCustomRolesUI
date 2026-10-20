@@ -34,11 +34,9 @@ jobs:
       - name: Rename JAR with architecture
         run: |
           cd target
-          for jar in VeracodeCustomRolesUI*.jar; do
-            if [[ "$jar" != *"-${{ matrix.arch }}"* ]]; then
-              mv "$jar" "${jar%.jar}-${{ matrix.arch }}.jar"
-            fi
-          done
+          if [ -f VeracodeCustomRolesUI.jar ]; then
+            mv VeracodeCustomRolesUI.jar VeracodeCustomRolesUI-${{ matrix.arch }}.jar
+          fi
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -64,7 +62,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.release_tag }}
-          files: release-artifacts/**/VeracodeCustomRolesUI-{arm64,x64}.jar
+          files: release-artifacts/**/*.jar
           draft: false
           prerelease: false
         env:
